@@ -15,7 +15,6 @@ var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 // create Oscillator node
 var oscillator = audioCtx.createOscillator();
 oscillator.type = 'sine';
-//oscillator.frequency.setValueAtTime(440, audioCtx.currentTime); // value in hertz
 
 var gainNode = audioCtx.createGain();
 oscillator.connect(gainNode);
@@ -28,6 +27,12 @@ class App extends Component {
     this.playSound = this.playSound.bind(this);
     this.stopSound = this.stopSound.bind(this);
     this.handleMouseMove = this.handleMouseMove.bind(this);
+    this.setPitch = this.setPitch.bind(this);
+    this.calculatePitch = this.calculatePitch.bind(this);
+  }
+
+  handleMouseMove(e) {
+    this.setPitch(e.pageX);
   }
 
   playSound() {
@@ -38,19 +43,16 @@ class App extends Component {
     gainNode.disconnect(audioCtx.destination);
   }
 
-  handleMouseMove(e) {
-    const x = e.pageX;
-    const windowWidth = window.innerWidth;
-    const newFrequency =
-      Math.pow(
-        2,
-        x *
-          (Math.log(mockOptions.range[1] / mockOptions.range[0]) /
-            Math.log(2) /
-            windowWidth)
-      ) * mockOptions.range[0];
-    console.log(newFrequency);
-    oscillator.frequency.value = newFrequency;
+  // set the oscillator's pitch based on the x position given
+  setPitch(x) {
+    oscillator.frequency.value = this.calculatePitch(x);
+  }
+
+  // given the mouse's x position, calculate what pitch(in hz) is to be played
+  calculatePitch(x) {
+    const [minHz, maxHz] = mockOptions.range;
+    const rate = Math.log2(maxHz / minHz) / window.innerWidth;
+    return Math.pow(2, x * rate) * minHz;
   }
 
   render() {
