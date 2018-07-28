@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Options from './Options';
 import PlayField from './PlayField';
 
+import { calculatePitch } from './util';
+
 const mockOptions = {
   volumeArea: 50,
   range: [80, 1440]
@@ -28,7 +30,6 @@ class App extends Component {
     this.stopSound = this.stopSound.bind(this);
     this.handleMouseMove = this.handleMouseMove.bind(this);
     this.setPitch = this.setPitch.bind(this);
-    this.calculatePitch = this.calculatePitch.bind(this);
   }
 
   handleMouseMove(e) {
@@ -45,14 +46,7 @@ class App extends Component {
 
   // set the oscillator's pitch based on the x position given
   setPitch(x) {
-    oscillator.frequency.value = this.calculatePitch(x);
-  }
-
-  // given the mouse's x position, calculate what pitch(in hz) is to be played
-  calculatePitch(x) {
-    const [minHz, maxHz] = mockOptions.range;
-    const rate = Math.log2(maxHz / minHz) / window.innerWidth;
-    return Math.pow(2, x * rate) * minHz;
+    oscillator.frequency.value = calculatePitch(x, mockOptions.range);
   }
 
   render() {
@@ -60,7 +54,8 @@ class App extends Component {
       <div>
         <Options />
         <PlayField
-          options={mockOptions}
+          range={mockOptions.range}
+          volumeArea={mockOptions.volumeArea}
           onMouseEnter={this.playSound}
           onMouseLeave={this.stopSound}
           onMouseMove={this.handleMouseMove}

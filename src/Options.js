@@ -84,14 +84,14 @@ function Options() {
             'A',
             'B',
             'B#/Cb'
-          ].map(key => <option>{key}</option>)}
+          ].map((key, index) => <option key={index}>{key}</option>)}
         </select>
       </div>
       <div>
         Scale
         <select>
-          {['Major', 'Minor', 'Chromatic'].map(scale => (
-            <option>{scale}</option>
+          {['Major', 'Minor', 'Chromatic'].map((scale, index) => (
+            <option key={index}>{scale}</option>
           ))}
         </select>
       </div>

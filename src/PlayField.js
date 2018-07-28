@@ -1,8 +1,9 @@
 import React from 'react';
 import VolumeField from './VolumeField';
+import GuideLines from './GuideLines';
 import './PlayField.css';
 
-function PlayField({ options, ...props }) {
+function PlayField(props) {
   return (
     <div
       className="PlayField"
@@ -10,7 +11,8 @@ function PlayField({ options, ...props }) {
       onMouseLeave={props.onMouseLeave}
       onMouseMove={props.onMouseMove}
     >
-      <VolumeField height={options.volumeArea} />
+      <GuideLines range={props.range} />
+      <VolumeField height={props.volumeArea} />
     </div>
   );
 }
