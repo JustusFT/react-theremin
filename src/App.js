@@ -3,8 +3,8 @@ import Options from './Options';
 import PlayField from './PlayField';
 
 const mockOptions = {
-  volumeArea: 50
-  //range: [80, 1440],
+  volumeArea: 50,
+  range: [80, 1440]
   //key: 'C',
   //scale: 'major'
 };
@@ -15,7 +15,7 @@ var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 // create Oscillator node
 var oscillator = audioCtx.createOscillator();
 oscillator.type = 'sine';
-oscillator.frequency.setValueAtTime(440, audioCtx.currentTime); // value in hertz
+//oscillator.frequency.setValueAtTime(440, audioCtx.currentTime); // value in hertz
 
 var gainNode = audioCtx.createGain();
 oscillator.connect(gainNode);
@@ -39,7 +39,18 @@ class App extends Component {
   }
 
   handleMouseMove(e) {
-    console.log(e);
+    const x = e.pageX;
+    const windowWidth = window.innerWidth;
+    const newFrequency =
+      Math.pow(
+        2,
+        x *
+          (Math.log(mockOptions.range[1] / mockOptions.range[0]) /
+            Math.log(2) /
+            windowWidth)
+      ) * mockOptions.range[0];
+    console.log(newFrequency);
+    oscillator.frequency.value = newFrequency;
   }
 
   render() {
