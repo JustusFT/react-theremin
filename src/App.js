@@ -23,6 +23,8 @@ class App extends Component {
         <PlayField
           range={options.range}
           volumeArea={options.volumeArea}
+          key={options.key}
+          scale={options.scale}
           onMouseEnter={this.thereminOscillator.playSound}
           onMouseLeave={this.thereminOscillator.stopSound}
           onMouseMove={this.handleMouseMove}

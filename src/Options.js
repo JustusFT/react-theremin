@@ -3,6 +3,8 @@ import Slider, { Range } from 'rc-slider';
 import './Options.css';
 import 'rc-slider/assets/index.css';
 
+import { KEYS, SCALES } from './constants';
+
 function Options() {
   return (
     <div className="Options">
@@ -71,26 +73,13 @@ function Options() {
       <div>
         Key
         <select>
-          {[
-            'C',
-            'C#/Db',
-            'D',
-            'D#/Eb',
-            'E',
-            'F',
-            'F#/Gb',
-            'G',
-            'G#/Ab',
-            'A',
-            'B',
-            'B#/Cb'
-          ].map((key, index) => <option key={index}>{key}</option>)}
+          {KEYS.map((key, index) => <option key={index}>{key}</option>)}
         </select>
       </div>
       <div>
         Scale
         <select>
-          {['Major', 'Minor', 'Chromatic'].map((scale, index) => (
+          {Object.keys(SCALES).map((scale, index) => (
             <option key={index}>{scale}</option>
           ))}
         </select>

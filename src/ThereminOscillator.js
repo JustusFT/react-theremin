@@ -24,9 +24,9 @@ export default class ThereminOscillator {
     // options object
     this.options = {
       volumeArea: 50,
-      range: [80, 1440]
-      //key: 'C',
-      //scale: 'major'
+      range: [80, 1440],
+      key: 'C',
+      scale: 'major'
     };
   }
 
