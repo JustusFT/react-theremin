@@ -1,5 +1,6 @@
-import React from 'react';
 import './VolumeField.css';
+
+import React from 'react';
 
 function VolumeField({ height }) {
   return (

@@ -1,7 +1,9 @@
-import React from 'react';
-import VolumeField from './VolumeField';
-import GuideLines from './GuideLines';
 import './PlayField.css';
+
+import React from 'react';
+
+import GuideLines from '../GuideLines/GuideLines';
+import VolumeField from '../VolumeField/VolumeField';
 
 function PlayField(props) {
   return (

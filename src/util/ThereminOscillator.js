@@ -1,4 +1,4 @@
-import { calculatePitch } from './util';
+import { calculatePitch } from './utilFunctions';
 
 export default class ThereminOscillator {
   constructor() {

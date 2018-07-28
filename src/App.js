@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import Options from './Options';
-import PlayField from './PlayField';
-import ThereminOscillator from './ThereminOscillator';
+
+import Options from './components/Options/Options';
+import PlayField from './components/PlayField/PlayField';
+import ThereminOscillator from './util/ThereminOscillator';
 
 class App extends Component {
   constructor(props) {

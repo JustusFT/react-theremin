@@ -1,9 +1,9 @@
-import React from 'react';
 import './GuideLines.css';
 
-import { tone, findPitchLocation } from './util';
+import React from 'react';
 
-import { PIANO_KEY_COUNT, SCALES, KEYS } from './constants';
+import { PIANO_KEY_COUNT, SCALES, KEYS } from '../../util/constants';
+import { tone, findPitchLocation } from '../../util/utilFunctions';
 
 // returns an array of guide lines as JSX elements
 function generateGuideLines(range, key, scale) {

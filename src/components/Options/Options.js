@@ -1,9 +1,11 @@
-import React from 'react';
-import Slider, { Range } from 'rc-slider';
-import './Options.css';
 import 'rc-slider/assets/index.css';
 
-import { KEYS, SCALES } from './constants';
+import './Options.css';
+
+import React from 'react';
+import Slider, { Range } from 'rc-slider';
+
+import { KEYS, SCALES } from '../../util/constants';
 
 function Options() {
   return (
