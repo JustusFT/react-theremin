@@ -1,10 +1,11 @@
 import React from 'react';
 import Slider, { Range } from 'rc-slider';
+import './Options.css';
 import 'rc-slider/assets/index.css';
 
 function Options() {
   return (
-    <div>
+    <div className="Options">
       <h1>Playfield</h1>
       <div>
         Frequency Range
