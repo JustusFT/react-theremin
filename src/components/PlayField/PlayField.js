@@ -13,12 +13,8 @@ function PlayField(props) {
       onMouseLeave={props.onMouseLeave}
       onMouseMove={props.onMouseMove}
     >
-      <GuideLines
-        range={props.range}
-        musicKey={props.musicKey}
-        scale={props.scale}
-      />
-      <VolumeField height={props.volumeArea} />
+      <GuideLines theremin={props.theremin} />
+      <VolumeField height={props.theremin.options.volumeArea} />
     </div>
   );
 }

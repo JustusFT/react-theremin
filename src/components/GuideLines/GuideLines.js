@@ -3,10 +3,16 @@ import './GuideLines.css';
 import React from 'react';
 
 import { PIANO_KEY_COUNT, SCALES, KEYS } from '../../util/constants';
-import { tone, findPitchLocation } from '../../util/utilFunctions';
 
-// returns an array of guide lines as JSX elements
-function generateGuideLines(range, key, scale) {
+// gets the frequency (in hz) of the nth key of a piano
+// formula taken from https://en.wikipedia.org/wiki/Piano_key_frequencies
+function tone(n) {
+  return Math.pow(Math.pow(2, 1 / 12), n - 49) * 440;
+}
+
+// takes in a Theremin object and returns an array of guide lines as JSX elements
+function generateGuideLines(theremin) {
+  const { key, scale } = theremin.options;
   const selectedKey = KEYS.indexOf(key);
   const selectedScale = SCALES[scale];
 
@@ -22,7 +28,7 @@ function generateGuideLines(range, key, scale) {
 
     // find the x-position of the guideline
     const pitch = tone(i);
-    const x = Math.round(findPitchLocation(pitch, range));
+    const x = Math.round(theremin.findPitchLocation(pitch));
 
     // don't add the guideline if its off-screen
     const isOnScreen = x >= 0 && x <= window.innerWidth;
@@ -36,8 +42,8 @@ function generateGuideLines(range, key, scale) {
   return guideLines;
 }
 
-function GuideLines({ range, musicKey, scale }) {
-  const guideLines = generateGuideLines(range, musicKey, scale);
+function GuideLines({ theremin }) {
+  const guideLines = generateGuideLines(theremin);
   return <div>{guideLines}</div>;
 }
 
