@@ -10,26 +10,35 @@ class App extends Component {
 
     this.thereminOscillator = new ThereminOscillator();
     this.handleMouseMove = this.handleMouseMove.bind(this);
+    this.handleOptionsChange = this.handleOptionsChange.bind(this);
   }
 
   handleMouseMove(e) {
     this.thereminOscillator.setPitch(e.pageX);
   }
 
+  handleOptionsChange(key, value, { forceUpdate = false }) {
+    this.thereminOscillator.options[key] = value;
+    if (forceUpdate) {
+      this.forceUpdate();
+    }
+  }
+
   render() {
     const { options } = this.thereminOscillator;
     return (
       <div>
-        <Options />
+        <Options onOptionsChange={this.handleOptionsChange} />
         <PlayField
           range={options.range}
           volumeArea={options.volumeArea}
-          key={options.key}
+          musicKey={options.key}
           scale={options.scale}
           onMouseEnter={this.thereminOscillator.playSound}
           onMouseLeave={this.thereminOscillator.stopSound}
           onMouseMove={this.handleMouseMove}
         />
+        <button onClick={() => this.forceUpdate()}>Update</button>
       </div>
     );
   }

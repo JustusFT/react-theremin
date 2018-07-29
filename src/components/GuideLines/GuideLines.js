@@ -14,7 +14,7 @@ function generateGuideLines(range, key, scale) {
 
   for (let i = 0; i < PIANO_KEY_COUNT; i++) {
     // skip notes that are not part of the scale
-    const offset = (i + selectedKey - 3) % 12;
+    const offset = (i - 4 - selectedKey) % 12;
     const isPartOfScale = selectedScale[offset] === 1;
     if (!isPartOfScale) {
       continue;
@@ -36,8 +36,8 @@ function generateGuideLines(range, key, scale) {
   return guideLines;
 }
 
-function GuideLines({ range, key, scale }) {
-  const guideLines = generateGuideLines(range, key, scale);
+function GuideLines({ range, musicKey, scale }) {
+  const guideLines = generateGuideLines(range, musicKey, scale);
   return <div>{guideLines}</div>;
 }
 

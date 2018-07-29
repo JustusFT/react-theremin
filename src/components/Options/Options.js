@@ -7,22 +7,32 @@ import Slider, { Range } from 'rc-slider';
 
 import { KEYS, SCALES } from '../../util/constants';
 
-function Options() {
+function Options(props) {
   return (
     <div className="Options">
       <h1>Playfield</h1>
       <div>
         Frequency Range
         <Range
+          onAfterChange={value =>
+            props.onOptionsChange('range', value, { forceUpdate: true })
+          }
           allowCross={false}
-          min={20}
+          min={25}
           max={4200}
           defaultValue={[80, 1440]}
         />
       </div>
       <div>
         Volume area %
-        <Slider min={1} max={100} defaultValue={50} />
+        <Slider
+          onAfterChange={value =>
+            props.onOptionsChange('volumeArea', value, { forceUpdate: true })
+          }
+          min={1}
+          max={100}
+          defaultValue={50}
+        />
       </div>
       <div>
         <div>Rate</div>
@@ -74,15 +84,31 @@ function Options() {
       <h1>Guidelines</h1>
       <div>
         Key
-        <select>
-          {KEYS.map((key, index) => <option key={index}>{key}</option>)}
+        <select
+          onChange={e =>
+            props.onOptionsChange('key', e.target.value, { forceUpdate: true })
+          }
+        >
+          {KEYS.map((key, index) => (
+            <option key={index} value={key}>
+              {key}
+            </option>
+          ))}
         </select>
       </div>
       <div>
         Scale
-        <select>
+        <select
+          onChange={e =>
+            props.onOptionsChange('scale', e.target.value, {
+              forceUpdate: true
+            })
+          }
+        >
           {Object.keys(SCALES).map((scale, index) => (
-            <option key={index}>{scale}</option>
+            <option key={index} value={scale}>
+              {scale}
+            </option>
           ))}
         </select>
       </div>
