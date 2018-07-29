@@ -18,7 +18,7 @@ class App extends Component {
     this.thereminOscillator.setVolume(e.pageY);
   }
 
-  handleOptionsChange(key, value, { forceUpdate = false }) {
+  handleOptionsChange(key, value, { forceUpdate = false } = {}) {
     this.thereminOscillator.options[key] = value;
     if (forceUpdate) {
       this.forceUpdate();

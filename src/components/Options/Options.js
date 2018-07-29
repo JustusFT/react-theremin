@@ -56,7 +56,12 @@ function Options(props) {
       <h1>Synth</h1>
       <div>
         Max volume
-        <Slider min={1} max={100} defaultValue={50} />
+        <Slider
+          onChange={value => props.onOptionsChange('maxVolume', value)}
+          min={1}
+          max={100}
+          defaultValue={100}
+        />
       </div>
       <div>
         <div>Waveform</div>

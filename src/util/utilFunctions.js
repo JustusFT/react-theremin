@@ -29,5 +29,5 @@ export function calculateLoudness(y, volumeArea, maxVolume) {
     Math.min(relativeToVolumeY, volumeFieldHeight)
   );
   const relativeToVolumeFieldInPercentage = withCappedRange / volumeFieldHeight;
-  return relativeToVolumeFieldInPercentage;
+  return (relativeToVolumeFieldInPercentage * maxVolume) / 100;
 }
