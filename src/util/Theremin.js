@@ -1,3 +1,11 @@
+import { PIANO_KEY_COUNT, SCALES, KEYS } from './constants';
+
+// gets the frequency (in hz) of the nth key of a piano
+// formula taken from https://en.wikipedia.org/wiki/Piano_key_frequencies
+function tone(n) {
+  return Math.pow(Math.pow(2, 1 / 12), n - 49) * 440;
+}
+
 export default class Theremin {
   constructor() {
     // create web audio api context
@@ -79,5 +87,36 @@ export default class Theremin {
     const relativeToVolumeFieldInPercentage =
       withCappedRange / volumeFieldHeight;
     return (relativeToVolumeFieldInPercentage * maxVolume) / 100;
+  };
+
+  // get an array of x values where the pitch will be on key
+  getNotePositions = () => {
+    const selectedKey = KEYS.indexOf(this.options.key);
+    const selectedScale = SCALES[this.options.scale];
+
+    const guideLines = [];
+
+    for (let i = 0; i < PIANO_KEY_COUNT; i++) {
+      // skip notes that are not part of the scale
+      const offset = (i - 4 - selectedKey) % 12;
+      const isPartOfScale = selectedScale[offset] === 1;
+      if (!isPartOfScale) {
+        continue;
+      }
+
+      // find the x-position of the guideline
+      const pitch = tone(i);
+      const x = Math.round(this.findPitchLocation(pitch));
+
+      // don't add the guideline if its off-screen
+      const isOnScreen = x >= 0 && x <= window.innerWidth;
+      if (!isOnScreen) {
+        continue;
+      }
+
+      guideLines.push(x);
+    }
+
+    return guideLines;
   };
 }
