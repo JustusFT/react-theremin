@@ -9,20 +9,28 @@ class App extends Component {
     super(props);
 
     this.thereminOscillator = new ThereminOscillator();
-    this.handleMouseMove = this.handleMouseMove.bind(this);
-    this.handleOptionsChange = this.handleOptionsChange.bind(this);
   }
 
-  handleMouseMove(e) {
+  resize = () => this.forceUpdate();
+
+  handleMouseMove = e => {
     this.thereminOscillator.setPitch(e.pageX);
     this.thereminOscillator.setVolume(e.pageY);
-  }
+  };
 
-  handleOptionsChange(key, value, { forceUpdate = false } = {}) {
+  handleOptionsChange = (key, value, { forceUpdate = false } = {}) => {
     this.thereminOscillator.options[key] = value;
     if (forceUpdate) {
       this.forceUpdate();
     }
+  };
+
+  componentDidMount() {
+    window.addEventListener('resize', this.resize);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.resize);
   }
 
   render() {
