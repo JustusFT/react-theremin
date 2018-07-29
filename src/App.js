@@ -15,6 +15,7 @@ class App extends Component {
 
   handleMouseMove(e) {
     this.thereminOscillator.setPitch(e.pageX);
+    this.thereminOscillator.setVolume(e.pageY);
   }
 
   handleOptionsChange(key, value, { forceUpdate = false }) {

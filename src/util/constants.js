@@ -1,7 +1,9 @@
 export const PIANO_KEY_COUNT = 88;
 
 export const SCALES = {
-  major: [1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1]
+  Major: [1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1],
+  Minor: [1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0],
+  Chromatic: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 };
 
 export const KEYS = [

@@ -1,4 +1,4 @@
-import { calculatePitch } from './utilFunctions';
+import { calculatePitch, calculateLoudness } from './utilFunctions';
 
 export default class ThereminOscillator {
   constructor() {
@@ -24,9 +24,10 @@ export default class ThereminOscillator {
     // options object
     this.options = {
       volumeArea: 50,
+      maxVolume: 1,
       range: [80, 1440],
       key: 'C',
-      scale: 'major'
+      scale: 'Major'
     };
   }
 
@@ -36,6 +37,15 @@ export default class ThereminOscillator {
 
   stopSound() {
     this.gainNode.disconnect(this.audioCtx.destination);
+  }
+
+  // set the volume based on the y position given
+  setVolume(y) {
+    this.gainNode.gain.value = calculateLoudness(
+      y,
+      this.options.volumeArea,
+      this.options.maxVolume
+    );
   }
 
   // set the oscillator's pitch based on the x position given

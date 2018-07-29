@@ -18,3 +18,16 @@ export function findPitchLocation(pitch, [minHz, maxHz]) {
 export function tone(n) {
   return Math.pow(Math.pow(2, 1 / 12), n - 49) * 440;
 }
+
+// given the mouse's y position and max volume, calculate how loud the audio should play
+export function calculateLoudness(y, volumeArea, maxVolume) {
+  const volumeFieldHeight = (volumeArea / 100) * window.innerHeight;
+  const volumeFieldY = ((1 - volumeArea / 100) / 2) * window.innerHeight;
+  const relativeToVolumeY = y - volumeFieldY;
+  const withCappedRange = Math.max(
+    0,
+    Math.min(relativeToVolumeY, volumeFieldHeight)
+  );
+  const relativeToVolumeFieldInPercentage = withCappedRange / volumeFieldHeight;
+  return relativeToVolumeFieldInPercentage;
+}
