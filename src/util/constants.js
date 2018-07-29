@@ -15,6 +15,6 @@ export const KEYS = [
   'G',
   'G#/Ab',
   'A',
-  'B',
-  'B#/Cb'
+  'A#/Bb',
+  'B'
 ];
