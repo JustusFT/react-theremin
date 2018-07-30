@@ -11,12 +11,14 @@ class App extends Component {
     this.theremin = new Theremin();
 
     this.state = {
+      optionsVisible: false,
       height: this.theremin.options.volumeArea,
       lines: this.theremin.getNotePositions()
     };
   }
 
-  resize = () => this.forceUpdate();
+  toggleOptions = () =>
+    this.setState({ optionsVisible: !this.state.optionsVisible });
 
   handleMouseMove = e => {
     this.theremin.setPitch(e.pageX);
@@ -32,13 +34,22 @@ class App extends Component {
 
   handleLineChange = (key, value) => {
     this.theremin.options[key] = value;
+    this.updateLines();
+  };
+
+  updateLines = () => {
     this.setState({
       lines: this.theremin.getNotePositions()
     });
   };
 
   componentDidMount() {
-    window.addEventListener('resize', this.resize);
+    // rerender guidelines on resize
+    window.addEventListener('resize', this.updateLines);
+    // toggle options view on 'o' keypress
+    window.addEventListener('keypress', e => {
+      e.key === 'o' && this.toggleOptions();
+    });
   }
 
   componentWillUnmount() {
@@ -48,11 +59,9 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Options
-          theremin={this.theremin}
-          onHeightChange={this.handleHeightChange}
-          onLineChange={this.handleLineChange}
-        />
+        <div style={{ position: 'absolute', zIndex: 999 }}>
+          Press `o` to view/hide options
+        </div>
         <PlayField
           lines={this.state.lines}
           height={this.state.height}
@@ -60,7 +69,13 @@ class App extends Component {
           onMouseLeave={this.theremin.stopSound}
           onMouseMove={this.handleMouseMove}
         />
-        <button onClick={() => this.forceUpdate()}>Update</button>
+        {this.state.optionsVisible && (
+          <Options
+            theremin={this.theremin}
+            onHeightChange={this.handleHeightChange}
+            onLineChange={this.handleLineChange}
+          />
+        )}
       </div>
     );
   }

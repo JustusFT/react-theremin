@@ -1,5 +1,8 @@
 .Options {
+  background-color: #fff;
+  padding: 1em;
   width: 400px;
+  box-sizing: border-box;
   position: absolute;
   top: 0;
   left: 0;
