@@ -9,6 +9,11 @@ class App extends Component {
     super(props);
 
     this.theremin = new Theremin();
+
+    this.state = {
+      height: this.theremin.options.volumeArea,
+      lines: this.theremin.getNotePositions()
+    };
   }
 
   resize = () => this.forceUpdate();
@@ -18,11 +23,18 @@ class App extends Component {
     this.theremin.setVolume(e.pageY);
   };
 
-  handleOptionsChange = (key, value, { forceUpdate = false } = {}) => {
+  handleHeightChange = value => {
+    this.theremin.options.height = value;
+    this.setState({
+      height: value
+    });
+  };
+
+  handleLineChange = (key, value) => {
     this.theremin.options[key] = value;
-    if (forceUpdate) {
-      this.forceUpdate();
-    }
+    this.setState({
+      lines: this.theremin.getNotePositions()
+    });
   };
 
   componentDidMount() {
@@ -36,9 +48,14 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Options onOptionsChange={this.handleOptionsChange} />
-        <PlayField
+        <Options
           theremin={this.theremin}
+          onHeightChange={this.handleHeightChange}
+          onLineChange={this.handleLineChange}
+        />
+        <PlayField
+          lines={this.state.lines}
+          height={this.state.height}
           onMouseEnter={this.theremin.playSound}
           onMouseLeave={this.theremin.stopSound}
           onMouseMove={this.handleMouseMove}

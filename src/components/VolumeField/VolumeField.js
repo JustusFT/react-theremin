@@ -2,15 +2,17 @@ import './VolumeField.css';
 
 import React from 'react';
 
-function VolumeField({ height }) {
-  return (
-    <div
-      className="VolumeField"
-      style={{
-        height: `${height}vh`
-      }}
-    />
-  );
+class VolumeField extends React.PureComponent {
+  render() {
+    return (
+      <div
+        className="VolumeField"
+        style={{
+          height: `${this.props.height}vh`
+        }}
+      />
+    );
+  }
 }
 
 export default VolumeField;
