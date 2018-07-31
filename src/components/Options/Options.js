@@ -8,6 +8,8 @@ import Slider, { Range } from 'rc-slider';
 import { KEYS, SCALES } from '../../util/constants';
 
 class Options extends React.PureComponent {
+  setWaveform = e => (this.props.theremin.oscillator.type = e.target.value);
+
   render() {
     return (
       <div className="Options">
@@ -64,19 +66,39 @@ class Options extends React.PureComponent {
           <div>Waveform</div>
           <label>
             Sine
-            <input type="radio" name="waveform" />
+            <input
+              type="radio"
+              name="waveform"
+              value="sine"
+              onChange={this.setWaveform}
+            />
           </label>
           <label>
             Triangle
-            <input type="radio" name="waveform" />
+            <input
+              type="radio"
+              name="waveform"
+              value="triangle"
+              onChange={this.setWaveform}
+            />
           </label>
           <label>
             Square
-            <input type="radio" name="waveform" />
+            <input
+              type="radio"
+              name="waveform"
+              value="square"
+              onChange={this.setWaveform}
+            />
           </label>
           <label>
             Sawtooth
-            <input type="radio" name="waveform" />
+            <input
+              type="radio"
+              name="waveform"
+              value="sawtooth"
+              onChange={this.setWaveform}
+            />
           </label>
         </div>
         <div>
