@@ -6,6 +6,11 @@ function tone(n) {
   return Math.pow(Math.pow(2, 1 / 12), n - 49) * 440;
 }
 
+// get the mirror of x relative to page width
+function mirrorX(x) {
+  return window.innerWidth - x;
+}
+
 export default class Theremin {
   constructor() {
     // create web audio api context
@@ -28,7 +33,9 @@ export default class Theremin {
       maxVolume: 100,
       range: [80, 1440],
       key: 'C',
-      scale: 'Major'
+      scale: 'Major',
+      invertVolumeAxis: false,
+      invertPitchAxis: false
     };
   }
 
@@ -61,14 +68,16 @@ export default class Theremin {
   // this is the inverse function of calculatePitch
   findPitchLocation = pitch => {
     const [minHz, maxHz] = this.options.range;
-    return (
-      (window.innerWidth * Math.log2(pitch / minHz)) / Math.log2(maxHz / minHz)
-    );
+    let x =
+      (window.innerWidth * Math.log2(pitch / minHz)) / Math.log2(maxHz / minHz);
+    this.options.invertPitchAxis && (x = mirrorX(x));
+    return x;
   };
 
   // given the mouse's x position and pitch range, calculate what pitch (in hz) is to be played
   // this is the inverse function of findPitchLocation
   calculatePitch = x => {
+    this.options.invertPitchAxis && (x = mirrorX(x));
     const [minHz, maxHz] = this.options.range;
     const rate = Math.log2(maxHz / minHz) / window.innerWidth;
     return Math.pow(2, x * rate) * minHz;

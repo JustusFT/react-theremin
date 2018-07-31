@@ -69,13 +69,12 @@ class App extends Component {
           onMouseLeave={this.theremin.stopSound}
           onMouseMove={this.handleMouseMove}
         />
-        {this.state.optionsVisible && (
-          <Options
-            theremin={this.theremin}
-            onHeightChange={this.handleHeightChange}
-            onLineChange={this.handleLineChange}
-          />
-        )}
+        <Options
+          hidden={!this.state.optionsVisible}
+          theremin={this.theremin}
+          onHeightChange={this.handleHeightChange}
+          onLineChange={this.handleLineChange}
+        />
       </div>
     );
   }

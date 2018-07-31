@@ -9,10 +9,15 @@ import { KEYS, SCALES } from '../../util/constants';
 
 class Options extends React.PureComponent {
   setWaveform = e => (this.props.theremin.oscillator.type = e.target.value);
+  toggleOption = e =>
+    (this.props.theremin.options[e.target.value] = e.target.checked);
 
   render() {
     return (
-      <div className="Options">
+      <div
+        className="Options"
+        style={{ display: this.props.hidden ? 'none' : 'initial' }}
+      >
         <h1>Playfield</h1>
         <div>
           Frequency Range
@@ -46,11 +51,16 @@ class Options extends React.PureComponent {
         </div>
         <div>
           Invert volume axis
-          <input type="checkbox" />
+          <input type="checkbox" onChange={this.toggleOption} />
         </div>
         <div>
           Invert pitch axis
-          <input type="checkbox" />
+          <input
+            type="checkbox"
+            onChange={e =>
+              this.props.onLineChange('invertPitchAxis', e.target.checked)
+            }
+          />
         </div>
         <h1>Synth</h1>
         <div>
