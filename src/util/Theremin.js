@@ -11,6 +11,16 @@ function mirrorX(x) {
   return window.innerWidth - x;
 }
 
+// get the mirror of y relative to page height
+function mirrorY(y) {
+  return window.innerHeight - y;
+}
+
+// calculate the slope from two points
+function slopeFromPoints([x1, y1], [x2, y2]) {
+  return (y2 - y1) / (x2 - x1);
+}
+
 export default class Theremin {
   constructor() {
     // create web audio api context
@@ -35,7 +45,8 @@ export default class Theremin {
       key: 'C',
       scale: 'Major',
       invertVolumeAxis: false,
-      invertPitchAxis: false
+      invertPitchAxis: false,
+      hzScale: 'logarithmic'
     };
   }
 
@@ -68,8 +79,22 @@ export default class Theremin {
   // this is the inverse function of calculatePitch
   findPitchLocation = pitch => {
     const [minHz, maxHz] = this.options.range;
-    let x =
-      (window.innerWidth * Math.log2(pitch / minHz)) / Math.log2(maxHz / minHz);
+    let x;
+    switch (this.options.hzScale) {
+      case 'logarithmic':
+        x =
+          (window.innerWidth * Math.log2(pitch / minHz)) /
+          Math.log2(maxHz / minHz);
+        break;
+      case 'linear':
+        const slope = slopeFromPoints([0, minHz], [window.innerWidth, maxHz]);
+        x = (pitch - minHz) / slope;
+        break;
+      default:
+        throw new Error(
+          'options.hzScale is not set to `logarithmic` or `linear`'
+        );
+    }
     this.options.invertPitchAxis && (x = mirrorX(x));
     return x;
   };
@@ -79,12 +104,23 @@ export default class Theremin {
   calculatePitch = x => {
     this.options.invertPitchAxis && (x = mirrorX(x));
     const [minHz, maxHz] = this.options.range;
-    const rate = Math.log2(maxHz / minHz) / window.innerWidth;
-    return Math.pow(2, x * rate) * minHz;
+    switch (this.options.hzScale) {
+      case 'logarithmic':
+        const rate = Math.log2(maxHz / minHz) / window.innerWidth;
+        return Math.pow(2, x * rate) * minHz;
+      case 'linear':
+        const slope = slopeFromPoints([0, minHz], [window.innerWidth, maxHz]);
+        return x * slope + minHz;
+      default:
+        throw new Error(
+          'options.hzScale is not set to `logarithmic` or `linear`'
+        );
+    }
   };
 
   // given the mouse's y position and max volume, calculate how loud the audio should play
   calculateLoudness = y => {
+    this.options.invertVolumeAxis && (y = mirrorY(y));
     const { volumeArea, maxVolume } = this.options;
     const volumeFieldHeight = (volumeArea / 100) * window.innerHeight;
     const volumeFieldY = ((1 - volumeArea / 100) / 2) * window.innerHeight;

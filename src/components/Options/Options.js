@@ -39,19 +39,32 @@ class Options extends React.PureComponent {
           />
         </div>
         <div>
-          <div>Rate</div>
+          <div>Scaling (in hz)</div>
           <label>
             Linear
-            <input type="radio" name="rate" />
+            <input
+              type="radio"
+              name="rate"
+              onChange={() => this.props.onLineChange('hzScale', 'linear')}
+            />
           </label>
           <label>
             Logarithmic
-            <input type="radio" name="rate" />
+            <input
+              type="radio"
+              name="rate"
+              onChange={() => this.props.onLineChange('hzScale', 'logarithmic')}
+              defaultChecked={true}
+            />
           </label>
         </div>
         <div>
           Invert volume axis
-          <input type="checkbox" onChange={this.toggleOption} />
+          <input
+            type="checkbox"
+            value="invertVolumeAxis"
+            onChange={this.toggleOption}
+          />
         </div>
         <div>
           Invert pitch axis
@@ -81,6 +94,7 @@ class Options extends React.PureComponent {
               name="waveform"
               value="sine"
               onChange={this.setWaveform}
+              defaultChecked={true}
             />
           </label>
           <label>
