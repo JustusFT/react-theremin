@@ -129,7 +129,7 @@ export default class Theremin {
 
   // given the mouse's y position and max volume, calculate how loud the audio should play
   calculateLoudness = y => {
-    this.options.invertVolumeAxis && (y = mirrorY(y));
+    this.options.invertVolumeAxis || (y = mirrorY(y));
     const { volumeArea, maxVolume } = this.options;
     const volumeFieldHeight = (volumeArea / 100) * window.innerHeight;
     const volumeFieldY = ((1 - volumeArea / 100) / 2) * window.innerHeight;
