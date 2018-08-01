@@ -143,7 +143,7 @@ export default class Theremin {
     return (relativeToVolumeFieldInPercentage * maxVolume) / 100;
   };
 
-  // get an array of x values where the pitch will be on key
+  // get an array of objects containing the key and x values where the pitch will be on key
   getNotePositions = () => {
     const selectedKey = KEYS.indexOf(this.options.key);
     const selectedScale = SCALES[this.options.scale];
@@ -168,7 +168,7 @@ export default class Theremin {
         continue;
       }
 
-      guideLines.push(x);
+      guideLines.push({ x, key: (i - 4) % 12 });
     }
 
     return guideLines;

@@ -6,6 +6,10 @@ export const SCALES = {
   Chromatic: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 };
 
+export const COLORS = Array(12)
+  .fill()
+  .map((_x, index) => `hsla(${(360 / 13) * index}, 100%, 50%, 0.5)`);
+
 export const KEYS = [
   'C',
   'C#/Db',
