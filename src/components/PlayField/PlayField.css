@@ -1,6 +1,6 @@
 .PlayField {
   height: 100vh;
-  background-color: lightgray;
+  background-color: #e5e5e5;
   display: flex;
   align-items: center;
 }
