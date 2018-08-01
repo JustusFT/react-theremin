@@ -127,7 +127,14 @@ class Options extends React.PureComponent {
         </div>
         <div>
           Filter
-          <Slider min={20} max={14000} defaultValue={14000} />
+          <Slider
+            min={20}
+            max={20000}
+            defaultValue={20000}
+            onAfterChange={value =>
+              (this.props.theremin.biquadFilter.frequency.value = value)
+            }
+          />
         </div>
         <h1>Guidelines</h1>
         <div>

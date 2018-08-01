@@ -32,7 +32,16 @@ export default class Theremin {
 
     // gain node
     this.gainNode = this.audioCtx.createGain();
-    this.oscillator.connect(this.gainNode);
+
+    // filter
+    this.biquadFilter = this.audioCtx.createBiquadFilter();
+    this.biquadFilter.type = 'lowpass';
+    this.biquadFilter.frequency.value = 20000;
+
+    // connect nodes
+    this.oscillator.connect(this.biquadFilter);
+    this.biquadFilter.connect(this.gainNode);
+    // the gainNode will connect to audioCtx later once playSound is called
 
     // activate
     this.oscillator.start();
