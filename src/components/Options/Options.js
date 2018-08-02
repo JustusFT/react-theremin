@@ -4,11 +4,58 @@ import './Options.css';
 
 import React from 'react';
 import Slider, { Range } from 'rc-slider';
+import classNames from 'classnames';
 
 import { KEYS, SCALES } from '../../util/constants';
 
+class RadioGroup extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selected: this.props.defaultSelectedValue
+    };
+  }
+
+  selectRadio = value => {
+    this.setState({ selected: value });
+    this.props.onChange(value);
+  };
+
+  render() {
+    const { children } = this.props;
+
+    const childrenWithProps = React.Children.map(children, child =>
+      React.cloneElement(child, {
+        name: this.props.name,
+        checked: this.state.selected === child.props.value,
+        onChange: this.selectRadio
+      })
+    );
+
+    return <div className="RadioGroup">{childrenWithProps}</div>;
+  }
+}
+
+class Radio extends React.Component {
+  handleChange = () => this.props.onChange(this.props.value);
+
+  render() {
+    return (
+      <label className={classNames({ selected: this.props.checked })}>
+        {this.props.label}
+        <input
+          type="radio"
+          name={this.props.name}
+          value={this.props.value}
+          checked={this.props.checked}
+          onChange={this.handleChange}
+        />
+      </label>
+    );
+  }
+}
+
 class Options extends React.PureComponent {
-  setWaveform = e => (this.props.theremin.oscillator.type = e.target.value);
   toggleOption = e =>
     (this.props.theremin.options[e.target.value] = e.target.checked);
 
@@ -40,23 +87,14 @@ class Options extends React.PureComponent {
         </div>
         <div>
           <div>Scaling (in hz)</div>
-          <label>
-            Linear
-            <input
-              type="radio"
-              name="rate"
-              onChange={() => this.props.onLineChange('hzScale', 'linear')}
-            />
-          </label>
-          <label>
-            Logarithmic
-            <input
-              type="radio"
-              name="rate"
-              onChange={() => this.props.onLineChange('hzScale', 'logarithmic')}
-              defaultChecked={true}
-            />
-          </label>
+          <RadioGroup
+            name="rate"
+            defaultSelectedValue="logarithmic"
+            onChange={value => this.props.onLineChange('hzScale', value)}
+          >
+            <Radio value="linear" label="Linear" />
+            <Radio value="logarithmic" label="Logarithmic" />
+          </RadioGroup>
         </div>
         <div>
           Invert volume axis
@@ -87,43 +125,16 @@ class Options extends React.PureComponent {
         </div>
         <div>
           <div>Waveform</div>
-          <label>
-            Sine
-            <input
-              type="radio"
-              name="waveform"
-              value="sine"
-              onChange={this.setWaveform}
-              defaultChecked={true}
-            />
-          </label>
-          <label>
-            Triangle
-            <input
-              type="radio"
-              name="waveform"
-              value="triangle"
-              onChange={this.setWaveform}
-            />
-          </label>
-          <label>
-            Square
-            <input
-              type="radio"
-              name="waveform"
-              value="square"
-              onChange={this.setWaveform}
-            />
-          </label>
-          <label>
-            Sawtooth
-            <input
-              type="radio"
-              name="waveform"
-              value="sawtooth"
-              onChange={this.setWaveform}
-            />
-          </label>
+          <RadioGroup
+            name="waveform"
+            defaultSelectedValue="sine"
+            onChange={value => (this.props.theremin.oscillator.type = value)}
+          >
+            <Radio value="sine" label="Sine" />
+            <Radio value="triangle" label="Triangle" />
+            <Radio value="square" label="Square" />
+            <Radio value="sawtooth" label="Sawtooth" />
+          </RadioGroup>
         </div>
         <div>
           Filter
