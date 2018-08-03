@@ -4,19 +4,30 @@
   white-space: nowrap;
 }
 
+.check-label {
+  margin-left: 0.5em;
+}
+
 .flex-item-right {
   margin-left: auto;
 }
 
 .Options {
+  line-height: 1.5em;
+  overflow-y: scroll;
+
   background-color: #fff;
-  padding: 1em;
+  padding: 1.5em;
   width: 480px;
   box-sizing: border-box;
   position: absolute;
   top: 0;
   left: 0;
   bottom: 0;
+}
+
+.option-row {
+  margin-bottom: 1em;
 }
 
 .Options .selected {
@@ -29,7 +40,7 @@
 
 .Options .RadioGroup label {
   border: 1px solid #999;
-  padding: 4px 8px;
+  padding: 2px 8px;
   display: inline-block;
 }
 

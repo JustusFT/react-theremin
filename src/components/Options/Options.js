@@ -66,7 +66,7 @@ class Options extends React.PureComponent {
         style={{ display: this.props.hidden ? 'none' : 'initial' }}
       >
         <h1>Playfield</h1>
-        <div>
+        <div className="option-row">
           Frequency Range
           <Range
             onAfterChange={value => this.props.onLineChange('range', value)}
@@ -76,7 +76,7 @@ class Options extends React.PureComponent {
             defaultValue={[80, 1440]}
           />
         </div>
-        <div>
+        <div className="option-row">
           Volume area %
           <Slider
             onAfterChange={value => this.props.onHeightChange(value)}
@@ -85,7 +85,7 @@ class Options extends React.PureComponent {
             defaultValue={50}
           />
         </div>
-        <div className="flex">
+        <div className="option-row flex">
           <span>Scaling (in hz)</span>
           <span className="flex-item-right">
             <RadioGroup
@@ -98,17 +98,17 @@ class Options extends React.PureComponent {
             </RadioGroup>
           </span>
         </div>
-        <div>
+        <div className="option-row">
           <label>
             <input
               type="checkbox"
               value="invertVolumeAxis"
               onChange={this.toggleOption}
             />
-            Invert volume axis
+            <span className="check-label">Invert volume axis</span>
           </label>
         </div>
-        <div>
+        <div className="option-row">
           <label>
             <input
               type="checkbox"
@@ -116,11 +116,11 @@ class Options extends React.PureComponent {
                 this.props.onLineChange('invertPitchAxis', e.target.checked)
               }
             />
-            Invert pitch axis
+            <span className="check-label">Invert pitch axis</span>
           </label>
         </div>
         <h1>Synth</h1>
-        <div>
+        <div className="option-row">
           Max volume
           <Slider
             onChange={value => (this.props.theremin.options.maxVolume = value)}
@@ -129,7 +129,7 @@ class Options extends React.PureComponent {
             defaultValue={100}
           />
         </div>
-        <div className="flex">
+        <div className="option-row flex">
           <span>Waveform</span>
           <span className="flex-item-right">
             <RadioGroup
@@ -144,7 +144,7 @@ class Options extends React.PureComponent {
             </RadioGroup>
           </span>
         </div>
-        <div>
+        <div className="option-row">
           Filter
           <Slider
             min={20}
@@ -156,7 +156,7 @@ class Options extends React.PureComponent {
           />
         </div>
         <h1>Guidelines</h1>
-        <div className="flex">
+        <div className="option-row flex">
           <span>Key</span>
           <select
             className="flex-item-right"
@@ -169,7 +169,7 @@ class Options extends React.PureComponent {
             ))}
           </select>
         </div>
-        <div className="flex">
+        <div className="option-row flex">
           <span>Scale</span>
           <select
             className="flex-item-right"
