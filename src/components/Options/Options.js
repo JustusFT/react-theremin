@@ -66,6 +66,73 @@ function CheckRow({ label, ...props }) {
   );
 }
 
+// returns the value unless it exceeds the boundary, then return the boundary it went across instead
+function limitBetween([min, max], value) {
+  return Math.max(min, Math.min(value, max));
+}
+
+class SliderWithInput extends React.Component {
+  state = {
+    input: this.props.defaultValue,
+    value: this.props.defaultValue
+  };
+
+  handleInputChange = e => {
+    this.setState({
+      input: e.target.value
+    });
+  };
+
+  // correct out-of-range values once user exits input
+  // TODO doesn't work when the spinners are used
+  handleInputBlur = e => {
+    const newValue = limitBetween(
+      [this.props.min, this.props.max],
+      e.target.value
+    );
+    this.setState(
+      {
+        input: newValue,
+        value: newValue
+      },
+      newState => this.props.onAfterChange(newValue)
+    );
+  };
+
+  handleSlideChange = value => {
+    this.setState({
+      value,
+      input: value
+    });
+  };
+
+  render() {
+    const { label, min, max, ...props } = this.props;
+    return (
+      <div className="option-row">
+        <label>
+          {label}
+          <input
+            type="number"
+            value={this.state.input}
+            min={min}
+            max={max}
+            onChange={this.handleInputChange}
+            onBlur={this.handleInputBlur}
+          />
+        </label>
+        <Slider
+          {...props}
+          min={min}
+          max={max}
+          onChange={this.handleSlideChange}
+          value={this.state.value}
+        />
+      </div>
+    );
+  }
+}
+
 class Options extends React.PureComponent {
   toggleOption = e =>
     (this.props.theremin.options[e.target.value] = e.target.checked);
@@ -87,15 +154,13 @@ class Options extends React.PureComponent {
             defaultValue={[80, 1440]}
           />
         </div>
-        <div className="option-row">
-          Volume area %
-          <Slider
-            onAfterChange={value => this.props.onHeightChange(value)}
-            min={1}
-            max={100}
-            defaultValue={50}
-          />
-        </div>
+        <SliderWithInput
+          label="Volume area %"
+          onAfterChange={value => this.props.onHeightChange(value)}
+          min={1}
+          max={100}
+          defaultValue={50}
+        />
         <div className="option-row flex">
           <span>Scaling (in hz)</span>
           <span className="flex-item-right">
@@ -121,15 +186,15 @@ class Options extends React.PureComponent {
           }
         />
         <h1>Synth</h1>
-        <div className="option-row">
-          Max volume
-          <Slider
-            onChange={value => (this.props.theremin.options.maxVolume = value)}
-            min={1}
-            max={100}
-            defaultValue={100}
-          />
-        </div>
+        <SliderWithInput
+          label="Max volume"
+          onAfterChange={value =>
+            (this.props.theremin.options.maxVolume = value)
+          }
+          min={1}
+          max={100}
+          defaultValue={100}
+        />
         <div className="option-row flex">
           <span>Waveform</span>
           <span className="flex-item-right">
@@ -145,17 +210,15 @@ class Options extends React.PureComponent {
             </RadioGroup>
           </span>
         </div>
-        <div className="option-row">
-          Filter
-          <Slider
-            min={20}
-            max={20000}
-            defaultValue={20000}
-            onAfterChange={value =>
-              (this.props.theremin.biquadFilter.frequency.value = value)
-            }
-          />
-        </div>
+        <SliderWithInput
+          label="Filter"
+          onAfterChange={value =>
+            (this.props.theremin.biquadFilter.frequency.value = value)
+          }
+          min={20}
+          max={20000}
+          defaultValue={20000}
+        />
         <h1>Guidelines</h1>
         <div className="option-row flex">
           <span>Key</span>
