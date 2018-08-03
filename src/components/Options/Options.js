@@ -55,6 +55,17 @@ class Radio extends React.Component {
   }
 }
 
+function CheckRow({ label, ...props }) {
+  return (
+    <div className="option-row">
+      <label>
+        <input type="checkbox" {...props} />
+        <span className="check-label">{label}</span>
+      </label>
+    </div>
+  );
+}
+
 class Options extends React.PureComponent {
   toggleOption = e =>
     (this.props.theremin.options[e.target.value] = e.target.checked);
@@ -98,27 +109,17 @@ class Options extends React.PureComponent {
             </RadioGroup>
           </span>
         </div>
-        <div className="option-row">
-          <label>
-            <input
-              type="checkbox"
-              value="invertVolumeAxis"
-              onChange={this.toggleOption}
-            />
-            <span className="check-label">Invert volume axis</span>
-          </label>
-        </div>
-        <div className="option-row">
-          <label>
-            <input
-              type="checkbox"
-              onChange={e =>
-                this.props.onLineChange('invertPitchAxis', e.target.checked)
-              }
-            />
-            <span className="check-label">Invert pitch axis</span>
-          </label>
-        </div>
+        <CheckRow
+          label="Invert volume axis"
+          value="invertVolumeAxis"
+          onChange={this.toggleOption}
+        />
+        <CheckRow
+          label="Invert pitch axis"
+          onChange={e =>
+            this.props.onLineChange('invertPitchAxis', e.target.checked)
+          }
+        />
         <h1>Synth</h1>
         <div className="option-row">
           Max volume
