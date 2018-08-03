@@ -1,7 +1,17 @@
+.flex {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.flex-item-right {
+  margin-left: auto;
+}
+
 .Options {
   background-color: #fff;
   padding: 1em;
-  width: 400px;
+  width: 480px;
   box-sizing: border-box;
   position: absolute;
   top: 0;
@@ -11,6 +21,10 @@
 
 .Options .selected {
   background-color: #aaa;
+}
+
+.Options .RadioGroup {
+  /*display: inline-block*/
 }
 
 .Options .RadioGroup label {

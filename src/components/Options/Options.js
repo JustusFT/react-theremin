@@ -85,33 +85,39 @@ class Options extends React.PureComponent {
             defaultValue={50}
           />
         </div>
-        <div>
-          <div>Scaling (in hz)</div>
-          <RadioGroup
-            name="rate"
-            defaultSelectedValue="logarithmic"
-            onChange={value => this.props.onLineChange('hzScale', value)}
-          >
-            <Radio value="linear" label="Linear" />
-            <Radio value="logarithmic" label="Logarithmic" />
-          </RadioGroup>
+        <div className="flex">
+          <span>Scaling (in hz)</span>
+          <span className="flex-item-right">
+            <RadioGroup
+              name="rate"
+              defaultSelectedValue="logarithmic"
+              onChange={value => this.props.onLineChange('hzScale', value)}
+            >
+              <Radio value="linear" label="Linear" />
+              <Radio value="logarithmic" label="Logarithmic" />
+            </RadioGroup>
+          </span>
         </div>
         <div>
-          Invert volume axis
-          <input
-            type="checkbox"
-            value="invertVolumeAxis"
-            onChange={this.toggleOption}
-          />
+          <label>
+            <input
+              type="checkbox"
+              value="invertVolumeAxis"
+              onChange={this.toggleOption}
+            />
+            Invert volume axis
+          </label>
         </div>
         <div>
-          Invert pitch axis
-          <input
-            type="checkbox"
-            onChange={e =>
-              this.props.onLineChange('invertPitchAxis', e.target.checked)
-            }
-          />
+          <label>
+            <input
+              type="checkbox"
+              onChange={e =>
+                this.props.onLineChange('invertPitchAxis', e.target.checked)
+              }
+            />
+            Invert pitch axis
+          </label>
         </div>
         <h1>Synth</h1>
         <div>
@@ -123,18 +129,20 @@ class Options extends React.PureComponent {
             defaultValue={100}
           />
         </div>
-        <div>
-          <div>Waveform</div>
-          <RadioGroup
-            name="waveform"
-            defaultSelectedValue="sine"
-            onChange={value => (this.props.theremin.oscillator.type = value)}
-          >
-            <Radio value="sine" label="Sine" />
-            <Radio value="triangle" label="Triangle" />
-            <Radio value="square" label="Square" />
-            <Radio value="sawtooth" label="Sawtooth" />
-          </RadioGroup>
+        <div className="flex">
+          <span>Waveform</span>
+          <span className="flex-item-right">
+            <RadioGroup
+              name="waveform"
+              defaultSelectedValue="sine"
+              onChange={value => (this.props.theremin.oscillator.type = value)}
+            >
+              <Radio value="sine" label="Sine" />
+              <Radio value="triangle" label="Triangle" />
+              <Radio value="square" label="Square" />
+              <Radio value="sawtooth" label="Sawtooth" />
+            </RadioGroup>
+          </span>
         </div>
         <div>
           Filter
@@ -148,9 +156,10 @@ class Options extends React.PureComponent {
           />
         </div>
         <h1>Guidelines</h1>
-        <div>
-          Key
+        <div className="flex">
+          <span>Key</span>
           <select
+            className="flex-item-right"
             onChange={e => this.props.onLineChange('key', e.target.value)}
           >
             {KEYS.map((key, index) => (
@@ -160,9 +169,10 @@ class Options extends React.PureComponent {
             ))}
           </select>
         </div>
-        <div>
-          Scale
+        <div className="flex">
+          <span>Scale</span>
           <select
+            className="flex-item-right"
             onChange={e => this.props.onLineChange('scale', e.target.value)}
           >
             {Object.keys(SCALES).map((scale, index) => (
