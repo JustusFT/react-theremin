@@ -4,8 +4,10 @@
   "author": "JustusFT <JustusFT@gmail.com>",
   "license": "MIT",
   "private": true,
+  "homepage": "https://justusft.github.io/react-theremin",
   "dependencies": {
     "classnames": "^2.2.6",
+    "gh-pages": "^1.2.0",
     "husky": "^0.14.3",
     "lint-staged": "^7.2.0",
     "normalize.css": "^8.0.0",
@@ -16,6 +18,8 @@
     "react-scripts": "1.1.4"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "precommit": "lint-staged",
     "start": "react-scripts start",
     "build": "react-scripts build",
