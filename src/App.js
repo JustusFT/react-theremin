@@ -26,7 +26,7 @@ class App extends Component {
   };
 
   handleHeightChange = value => {
-    this.theremin.options.height = value;
+    this.theremin.options.volumeArea = value;
     this.setState({
       height: value
     });
