@@ -1,6 +1,8 @@
 {
   "name": "theremin",
   "version": "0.1.0",
+  "author": "JustusFT <JustusFT@gmail.com>",
+  "license": "MIT",
   "private": true,
   "dependencies": {
     "classnames": "^2.2.6",
