@@ -2,139 +2,14 @@ import 'rc-slider/assets/index.css';
 
 import './Options.css';
 
+import { Range } from 'rc-slider';
 import React from 'react';
-import Slider, { Range } from 'rc-slider';
-import classNames from 'classnames';
 
 import { KEYS, SCALES } from '../../util/constants';
-
-class RadioGroup extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selected: this.props.defaultSelectedValue
-    };
-  }
-
-  selectRadio = value => {
-    this.setState({ selected: value });
-    this.props.onChange(value);
-  };
-
-  render() {
-    const { children } = this.props;
-
-    const childrenWithProps = React.Children.map(children, child =>
-      React.cloneElement(child, {
-        name: this.props.name,
-        checked: this.state.selected === child.props.value,
-        onChange: this.selectRadio
-      })
-    );
-
-    return <div className="RadioGroup">{childrenWithProps}</div>;
-  }
-}
-
-class Radio extends React.Component {
-  handleChange = () => this.props.onChange(this.props.value);
-
-  render() {
-    return (
-      <label className={classNames({ selected: this.props.checked })}>
-        {this.props.label}
-        <input
-          type="radio"
-          name={this.props.name}
-          value={this.props.value}
-          checked={this.props.checked}
-          onChange={this.handleChange}
-        />
-      </label>
-    );
-  }
-}
-
-function CheckRow({ label, ...props }) {
-  return (
-    <div className="option-row">
-      <label>
-        <input type="checkbox" {...props} />
-        <span className="check-label">{label}</span>
-      </label>
-    </div>
-  );
-}
-
-// returns the value unless it exceeds the boundary, then return the boundary it went across instead
-function limitBetween([min, max], value) {
-  return Math.max(min, Math.min(value, max));
-}
-
-class SliderWithInput extends React.Component {
-  state = {
-    input: this.props.defaultValue,
-    value: this.props.defaultValue
-  };
-
-  handleInputChange = e => {
-    this.setState({
-      input: e.target.value
-    });
-  };
-
-  // correct out-of-range values once user exits input
-  // TODO doesn't work when the spinners are used
-  handleInputBlur = e => {
-    const newValue = limitBetween(
-      [this.props.min, this.props.max],
-      e.target.value
-    );
-    this.setState(
-      {
-        input: newValue,
-        value: newValue
-      },
-      newState => this.props.onAfterChange(newValue)
-    );
-  };
-
-  handleSlideChange = value => {
-    this.setState({
-      value,
-      input: value
-    });
-  };
-
-  render() {
-    const { label, min, max, ...props } = this.props;
-    return (
-      <div className="option-row">
-        <label>
-          <div className="flex">
-            <span>{label}</span>
-            <input
-              className="flex-item-right"
-              type="number"
-              value={this.state.input}
-              min={min}
-              max={max}
-              onChange={this.handleInputChange}
-              onBlur={this.handleInputBlur}
-            />
-          </div>
-        </label>
-        <Slider
-          {...props}
-          min={min}
-          max={max}
-          onChange={this.handleSlideChange}
-          value={this.state.value}
-        />
-      </div>
-    );
-  }
-}
+import CheckRow from './components/CheckRow';
+import Radio from './components/Radio';
+import RadioGroup from './components/RadioGroup';
+import SliderWithInput from './components/SliderWithInput';
 
 class Options extends React.PureComponent {
   toggleOption = e =>
