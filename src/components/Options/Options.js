@@ -111,15 +111,18 @@ class SliderWithInput extends React.Component {
     return (
       <div className="option-row">
         <label>
-          {label}
-          <input
-            type="number"
-            value={this.state.input}
-            min={min}
-            max={max}
-            onChange={this.handleInputChange}
-            onBlur={this.handleInputBlur}
-          />
+          <div className="flex">
+            <span>{label}</span>
+            <input
+              className="flex-item-right"
+              type="number"
+              value={this.state.input}
+              min={min}
+              max={max}
+              onChange={this.handleInputChange}
+              onBlur={this.handleInputBlur}
+            />
+          </div>
         </label>
         <Slider
           {...props}
