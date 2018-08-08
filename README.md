@@ -10,7 +10,7 @@ TODO
 # Setup
 1. Clone the repository to your machine and cd into the repo
 ```
-git clone
+git clone https://github.com/JustusFT/react-theremin.git
 cd react-theremin
 ```
 2. Install yarn dependencies
